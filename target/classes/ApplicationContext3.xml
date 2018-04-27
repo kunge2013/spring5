@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath*:*.proterties"/>
+
+    <!--校验-->
+    <bean id="personValidalidator" class="cap3.validator.PersonValidator"/>
+    <!--格式处理-->
+    <!-- 特殊属性的注入.把特殊属性注入到CustomEditorConfigurer Bean 里 -->
+    <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <!--只要是spring容器创建的对象， 对于Long 类型的数据进行统一的格式处理 通过 LongPropertyEditor 处理，格式自定义-->
+       <!-- 。。。。。。。。。。。。。。。。。。方式一 配置。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。-->
+        <!--<property name="customEditors">-->
+            <!--<map>-->
+                <!--<entry key="java.lang.Long" value = "cap3.edit.edit.LongPropertyEditor"/>-->
+            <!--</map>-->
+        <!--</property>-->
+        <!-- 。。。。。。。。。。 https://docs.spring.io/spring/docs/5.0.6.BUILD-SNAPSHOT/spring-framework-reference/core.html#beans-beans-conversion-customeditor-registration-->
+        <!-- 。。。。。。。。。。方式二 配置 结合 Spring MVC 使用 可以和 ServletRequestDataBinder binder 结合使用。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。-->
+
+        <property name="propertyEditorRegistrars">
+            <list>
+                <ref bean="customPropertyEditorRegistrar"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="customPropertyEditorRegistrar" class="cap3.edit.CustomPropertyEditorRegistrar"/>
+
+    <bean id="customerDate" class="cap3.edit.type.CustomerDate">
+        <property name="opTimeout" value="45"/>
+    </bean>
+
+
+    <!--第二种装换方式，直接转换-->
+    <!-- 实现conver 接口转换器添加-->
+    <!--<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">-->
+        <!--<property name="converters">-->
+            <!--<list>-->
+                <!--<bean class="cap3.spi.StringToInteger" />-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--格式的统一管理-->
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+
+        <property name="converters">
+            <list>
+                <bean class="cap3.spi.StringToInteger" />
+            </list>
+        </property>
+
+        <property name="registerDefaultFormatters" value="false" />
+        <property name="formatters">
+            <set>
+                <bean class="org.springframework.format.number.NumberFormatAnnotationFormatterFactory" />
+            </set>
+        </property>
+
+        <property name="formatterRegistrars">
+            <set>
+                <bean class="org.springframework.format.datetime.joda.JodaTimeFormatterRegistrar">
+                    <property name="dateFormatter">
+                        <bean class="org.springframework.format.datetime.joda.DateTimeFormatterFactoryBean">
+                            <property name="pattern" value="yyyyMMdd"/>
+                        </bean>
+                    </property>
+                </bean>
+            </set>
+        </property>
+    </bean>
+
+
+</beans>
