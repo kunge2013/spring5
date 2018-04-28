@@ -14,9 +14,10 @@ import cap1.com.primary.SingerService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import cap1.resourceLoader.PropertiesUtils;
+import org.springframework.context.annotation.ImportResource;
 
 import java.util.Locale;
-
+@ImportResource("classpath*:*4.xml")
 public class AppConfig {
     public static void main(String[] args) {
 //        ApplicationContext context = new ClassPathXmlApplicationContext("ApplicationContext.xml");
