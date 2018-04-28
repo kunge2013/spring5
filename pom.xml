@@ -32,6 +32,14 @@
             <artifactId>spring-aop</artifactId>
             <version>5.0.5.RELEASE</version>
         </dependency>
+
+        <!-- 事物的处理-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>5.0.5.RELEASE</version>
+        </dependency>
+
         <!-- AspectJ 切面-->
         <dependency>
             <groupId>org.aspectj</groupId>

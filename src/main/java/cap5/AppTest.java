@@ -12,9 +12,9 @@ public class AppTest {
     public static void main(String[] args)
     {
         ApplicationContext context = new AnnotationConfigApplicationContext(AppTest.class);
-        Horseman hm = (Horseman)context.getBean("horseman");
-        hm.rush("Ghoul");
-        hm.chop("Ghoul");
+//        Horseman hm = (Horseman)context.getBean("horseman");
+//        hm.rush("Ghoul");
+//        hm.chop("Ghoul");
         Swordman sm = (Swordman)context.getBean("swordman");
         sm.block("Ghoul");
         sm.chop("Ghoul");

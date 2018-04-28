@@ -3,7 +3,6 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:aop="http://www.springframework.org/schema/aop"
-
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
@@ -12,9 +11,14 @@
        http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <context:component-scan base-package="cap5.*"/>
+    <!--<context:load-time-weaver aspectj-weaving="autodetect" />-->
+    <!--true是cglib 代理 false 是 jdk代理-->
+    <aop:config proxy-target-class="true"/>
+
     <aop:aspectj-autoproxy />
     <context:property-placeholder location="classpath*:*.proterties"/>
     <bean id="horseman" class="cap5.Horseman" />
     <bean id="swordman" class="cap5.Swordman" />
     <bean class="cap5.StorageAdvisor" />
+
 </beans>
